@@ -27,7 +27,7 @@ public class Function_06_Test {
     // TODO la méthode retourne une chaîne de caractères de la forme [age=<AGE>] (exemple : [age=12])
     String formatAge(Supplier<Person> supplier) {
         // TODO
-        return null;
+        return new StringBuilder().append("[age=").append(supplier.get().getAge()).append("]").toString() ;
     }
     // end::formatAge[]
 
@@ -35,7 +35,11 @@ public class Function_06_Test {
     @Test
     public void test_supplier_formatAge() throws Exception {
         // TODO compléter le test unitaire pour qu'il soit passant
-        String result = formatAge(null);
+    	Supplier<Person>perso = ()->{
+			return new Person("jena","logan",35,"test") ;
+    	};
+    			
+        String result = formatAge(perso);
 
         assertThat(result, is("[age=35]"));
     }
@@ -47,7 +51,9 @@ public class Function_06_Test {
         expectedException.expectMessage("require non null object");
 
         // TODO compléter le test unitaire pour qu'il soit passant
-        Supplier<String> supplier = null;
+        Supplier<String> supplier = ()->{
+			return "require non null object" ;
+        };
 
         // Avec un paramètre null, cette méthode déclenche un NullPointerException
         Objects.requireNonNull(null, supplier);
