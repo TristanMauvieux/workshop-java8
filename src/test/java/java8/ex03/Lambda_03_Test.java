@@ -2,6 +2,8 @@ package java8.ex03;
 
 import java8.data.Data;
 import java8.data.Person;
+
+import org.apache.commons.codec.binary.StringUtils;
 import org.junit.Test;
 
 import java.util.List;
@@ -23,6 +25,9 @@ public class Lambda_03_Test {
     // tag::forEach[]
     private void forEach(List<Person> source, PersonProcessor processor) {
        // TOD0
+    	for (int i = 0; i < source.size(); i++) {
+    		processor.process(source.get(i));
+		}
     }
     // end::forEach[]
 
@@ -32,11 +37,21 @@ public class Lambda_03_Test {
     public void test_verify_person() throws Exception {
 
         List<Person> personList = Data.buildPersonList(100);
+        
 
         // TODO vérifier qu'une personne à un prénom qui commence par first
         // TODO vérifier qu'une personne à un nom qui commence par last
         // TODO vérifier qu'une personne à un age > 0
-        PersonProcessor verifyPerson = null;
+        PersonProcessor verifyPerson = new PersonProcessor() {
+			
+			@Override
+			public void process(Person p) {
+				assertTrue(p.getFirstname().startsWith("first"));
+				assertTrue(p.getLastname().startsWith("last"));
+				assertTrue(p.getAge() >0);
+				
+			}
+		};
 
         assertThat(verifyPerson, notNullValue());
 
